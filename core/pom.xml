@@ -87,6 +87,13 @@
             <version>1.2.10</version>
         </dependency>
 
+        <!-- 日志文件管理包，提高性能log输出性能；logback依赖janino-->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.7.8</version>
+        </dependency>
+
         <!-- ******************************* 常用依赖库 ********************************** -->
         <!-- 针对开发IO流功能的工具类库 -->
         <dependency>
@@ -98,7 +105,7 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-io</groupId>
