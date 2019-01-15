@@ -1,7 +1,12 @@
 package com.geekz.core.base;
 
 /**
- * Created by lengleng on 2019-1-12.
+ *
+ * BaseMapper
+ *
+ * @name BaseMapper
+ * @version 1.0
+ * @author zrz 2019-1-15
  */
-public class BaseMapper {
+public interface BaseMapper<T> {
 }

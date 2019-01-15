@@ -1,63 +1,65 @@
 package com.geekz.core.system.controller;
 
-import com.geekz.core.constants.Constants;
 import com.geekz.core.base.BaseController;
-import com.geekz.core.constants.BaseEnums;
 import com.geekz.core.base.Result;
+import com.geekz.core.constants.BaseEnums;
 import com.geekz.core.system.dto.User;
-import com.geekz.core.util.Dates;
+import com.geekz.core.system.service.UserService;
 import com.geekz.core.util.Results;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
  * 用户Controller
  *
  * @version 1.0
- * @author zrz 2019-1-12
+ * @author bojiangzhou 2017-12-31
  */
-@RequestMapping("/sys/user")
+@RequestMapping
 @RestController
 public class UserController extends BaseController {
 
-    private static List<User> userList = new ArrayList<>();
+    @Autowired
+    private UserService userService;
 
-    // 先静态模拟数据
-    static {
-        User user1 = new User();
-        user1.setUserId(1L);
-        user1.setUsername("lufei");
-        user1.setNickname("蒙奇D路飞");
-        user1.setBirthday(Dates.parseDate("2000-05-05"));
-        user1.setEnabled(Constants.Flag.YES);
-        userList.add(user1);
 
-        User user2 = new User();
-        user2.setUserId(2L);
-        user2.setUsername("nami");
-        user2.setNickname("娜美");
-        user2.setBirthday(Dates.parseDate("2000/7/3"));
-        user2.setEnabled(Constants.Flag.YES);
-        userList.add(user2);
-    }
-
-    @RequestMapping("/queryAll")
+    @PostMapping("/sys/user/queryAll")
     public Result queryAll(){
-        return Results.successWithData(userList, BaseEnums.SUCCESS.code(), BaseEnums.SUCCESS.desc());
+        List<User> list = userService.selectAll();
+        return Results.successWithData(list, BaseEnums.SUCCESS.code(), BaseEnums.SUCCESS.desc());
     }
 
-    @RequestMapping("/queryOne/{userId}")
+    @RequestMapping("/sys/user/queryOne/{userId}")
     public Result queryOne(@PathVariable Long userId){
-        User user = null;
-        for(User u : userList){
-            if(u.getUserId().longValue() == userId){
-                user = u;
-            }
-        }
+        User user = userService.get(userId);
         return Results.successWithData(user);
     }
+
+    @PostMapping("/sys/user/save")
+    public Result save(@Valid @RequestBody User user){
+        user = userService.insertSelective(user);
+        return Results.successWithData(user);
+    }
+
+    @PostMapping("/sys/user/update")
+    public Result update(@Valid @RequestBody List<User> user){
+        user = userService.persistSelective(user);
+        return Results.successWithData(user);
+    }
+
+    @RequestMapping("/sys/user/delete")
+    public Result delete(User user){
+        userService.delete(user);
+        return Results.success();
+    }
+
+    @RequestMapping("/sys/user/delete/{userId}")
+    public Result delete(@PathVariable Long userId){
+        userService.delete(userId);
+        return Results.success();
+    }
+
 }
