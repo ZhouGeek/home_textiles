@@ -15,7 +15,7 @@ import java.util.Date;
  * @author zrz 2019-1-12
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "SYS_USER")
+@Table(name = "sys_user")
 public class User extends BaseDTO {
     private static final long serialVersionUID = -7395431342743009038L;
 
