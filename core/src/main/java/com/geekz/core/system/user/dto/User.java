@@ -1,4 +1,4 @@
-package com.geekz.core.system.dto;
+package com.geekz.core.system.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -51,6 +51,16 @@ public class User extends BaseDTO {
      * 是否启用：1/0
      */
     private Integer enabled;
+
+    /**
+     * 会员卡号
+     */
+    private String card;
+
+    /**
+     * 小程序对应id
+     */
+    private String openId;
 
     public Long getUserId() {
         return userId;
@@ -108,4 +118,19 @@ public class User extends BaseDTO {
         this.enabled = enabled;
     }
 
+    public String getCard() {
+        return card;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 }

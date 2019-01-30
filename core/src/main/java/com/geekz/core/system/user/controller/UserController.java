@@ -1,10 +1,10 @@
-package com.geekz.core.system.controller;
+package com.geekz.core.system.user.controller;
 
 import com.geekz.core.base.BaseController;
 import com.geekz.core.base.Result;
 import com.geekz.core.constants.BaseEnums;
-import com.geekz.core.system.dto.User;
-import com.geekz.core.system.service.UserService;
+import com.geekz.core.system.user.dto.User;
+import com.geekz.core.system.user.service.UserService;
 import com.geekz.core.util.Results;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
-package com.geekz.core.system.service;
+package com.geekz.core.system.user.service;
 
 import com.geekz.core.base.Service;
-import com.geekz.core.system.dto.User;
+import com.geekz.core.system.user.dto.User;
 
 /**
  * 用户Service接口

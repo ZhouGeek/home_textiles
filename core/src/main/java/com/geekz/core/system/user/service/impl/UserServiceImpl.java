@@ -1,10 +1,10 @@
-package com.geekz.core.system.service.impl;
+package com.geekz.core.system.user.service.impl;
 
 import org.springframework.stereotype.Service;
 
 import com.geekz.core.base.BaseService;
-import com.geekz.core.system.dto.User;
-import com.geekz.core.system.service.UserService;
+import com.geekz.core.system.user.dto.User;
+import com.geekz.core.system.user.service.UserService;
 
 /**
  * 用户Service实现类

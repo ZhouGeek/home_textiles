@@ -1,7 +1,7 @@
-package com.geekz.core.system.mapper;
+package com.geekz.core.system.user.mapper;
 
 import com.geekz.core.base.Mapper;
-import com.geekz.core.system.dto.User;
+import com.geekz.core.system.user.dto.User;
 
 /**
  *
