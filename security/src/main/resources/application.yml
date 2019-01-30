@@ -1,0 +1,17 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: security
+  datasource:
+    url: jdbc:mysql://111.231.145.78:3306/home_textiles?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=true
+    username: root
+    password: 123456
+  mvc:
+    static-path-pattern: /static/**
+logging:
+  level:
+    org.apache.jbatis: debug
+    com.geekz: debug
+    org.springframework.security.web: debug
+
