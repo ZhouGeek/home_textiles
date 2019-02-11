@@ -46,4 +46,16 @@ public class Constants {
          */
         String DELETE = "delete";
     }
+
+    /**
+     * 小程序appid
+     */
+    public static final String APP_ID = "";
+
+    /**
+     * 小程序appsecret
+     */
+    public static final String App_SECRET = "";
+
+    public static final String STRING_NULL = "";
 }

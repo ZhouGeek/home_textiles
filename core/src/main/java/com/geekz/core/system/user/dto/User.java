@@ -50,7 +50,27 @@ public class User extends BaseDTO {
     /**
      * 是否启用：1/0
      */
-    private Integer enabled;
+    private Integer enabled = 1;
+
+    /**
+     * 城市
+     */
+    private String city;
+
+    /**
+     * 国家
+     */
+    private String country;
+
+    /**
+     * 省份
+     */
+    private String province;
+
+    /**
+     * 语言
+     */
+    private String language;
 
     /**
      * 会员卡号
@@ -132,5 +152,37 @@ public class User extends BaseDTO {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

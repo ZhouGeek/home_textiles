@@ -107,6 +107,13 @@
             <version>2.7.8</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
         <!-- ******************************* 常用依赖库 ********************************** -->
         <!-- 针对开发IO流功能的工具类库 -->
         <dependency>

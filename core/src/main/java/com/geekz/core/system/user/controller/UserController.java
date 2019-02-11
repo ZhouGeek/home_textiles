@@ -1,18 +1,32 @@
 package com.geekz.core.system.user.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.geekz.core.base.BaseController;
 import com.geekz.core.base.Result;
 import com.geekz.core.constants.BaseEnums;
+import com.geekz.core.constants.Constants;
+import com.geekz.core.constants.ModelConstant;
+import com.geekz.core.system.common.service.SeqSettingService;
 import com.geekz.core.system.user.dto.User;
 import com.geekz.core.system.user.service.UserService;
 import com.geekz.core.util.Results;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户Controller
@@ -37,6 +51,11 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
+    /**
+     * seqSettingService
+     */
+    @Autowired
+    private SeqSettingService seqSettingService;
 
     @PostMapping("/sys/user/queryAll")
     public Result queryAll(){
@@ -77,6 +96,75 @@ public class UserController extends BaseController {
     public Result delete(@PathVariable Long userId){
         userService.delete(userId);
         return Results.success();
+    }
+
+    /**
+     * 根据openId查询用户
+     * @param code
+     * @return
+     */
+    @RequestMapping("/sys/user/queryByOpenId/{code}")
+    public Result queryByOpenId(@PathVariable String code, @RequestBody JSONObject obj) throws Exception {
+        String AppID = Constants.APP_ID;
+        String AppSecret= Constants.App_SECRET;//这两个都可以从微信公众平台中查找
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid="
+                + AppID + "&secret=" + AppSecret + "&js_code="
+                + code + "&grant_type=authorization_code";
+        URL reqURL = new URL(url);
+        HttpsURLConnection openConnection = (HttpsURLConnection) reqURL
+                .openConnection();
+        openConnection.setConnectTimeout(10000);
+        //这里我感觉获取openid的时间比较长，不过也可能是我网络的问题，
+        //所以设置的响应时间比较长
+        openConnection.connect();
+        InputStream in = openConnection.getInputStream();
+
+        StringBuilder builder = new StringBuilder();
+        BufferedReader bufreader = new BufferedReader(new InputStreamReader(in));
+        for (String temp = bufreader.readLine(); temp != null; temp = bufreader
+                .readLine()) {
+            builder.append(temp);
+        }
+
+        String stringObj = builder.toString();
+
+        //JSONObject
+        JSONObject jsonObject=JSONObject.parseObject(stringObj);
+        User user = null;
+
+        if (jsonObject != null && !jsonObject.isEmpty()) {
+            String openId = jsonObject.getString("openid");
+            if (StringUtils.isNotBlank(openId)) {
+                user = userService.get("openId", openId);
+            }
+
+            if (obj != null) {
+                String data = obj.toJSONString();
+                //解析json数据
+                JSONObject json = JSON.parseObject(data);
+                if (json != null && !json.isEmpty()) {
+                    if (user != null) {
+                        user.set_operate(Constants.Operation.UPDATE);
+                        user.setUpdateDate(new Date());
+                    } else {
+                        user = new User();
+                        user.set_operate(Constants.Operation.ADD);
+                        user.setCreateDate(new Date());
+                        //user.setCard(seqSettingService.doGenerate(ModelConstant.HY_CODE, ModelConstant.HY_CODE));
+                    }
+                    user.setNickname(json.getString(ModelConstant.NICK_NAME));
+                    user.setProvince(json.getString(ModelConstant.PROVINCE));
+                    user.setCity(json.getString(ModelConstant.CITY));
+                    user.setCountry(json.getString(ModelConstant.COUNTRY));
+                    user.setSex(json.getInteger(ModelConstant.SEX));
+                    user.setOpenId(openId);
+                    user = userService.persistSelective(user);
+                }
+            }
+        }
+        in.close();
+        openConnection.disconnect();
+        return Results.successWithData(user);
     }
 
 }
