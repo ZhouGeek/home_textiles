@@ -50,12 +50,12 @@ public class Constants {
     /**
      * 小程序appid
      */
-    public static final String APP_ID = "";
+    public static final String APP_ID = "wx8ec5498e88015894";
 
     /**
      * 小程序appsecret
      */
-    public static final String App_SECRET = "";
+    public static final String App_SECRET = "89ca98136e4abb11462a05566fcb6fac";
 
     public static final String STRING_NULL = "";
 }

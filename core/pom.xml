@@ -22,6 +22,10 @@
 		<java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <!-- 布局功能的支持程序  thymeleaf3主程序  layout2以上版本 -->
+        <!-- thymeleaf2   layout1-->
+        <thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
 	</properties>
 
 	<dependencies>
@@ -112,6 +116,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
+        </dependency>
+
+        <!-- thymeleaf静态模版注入 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- ******************************* 常用依赖库 ********************************** -->
